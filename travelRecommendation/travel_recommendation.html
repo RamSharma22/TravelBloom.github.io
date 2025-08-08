@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelBloom - Discover Your Next Adventure</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c5aa0;
+            text-decoration: none;
+        }
+        .logo i {
+            color: #ff6b35;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #2c5aa0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: #ff6b35;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .search-input {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 250px;
+        }
+        .search-input:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 10px rgba(44, 90, 160, 0.2);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2c5aa0, #3d6cb9);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.4);
+        }
+
+        .btn-secondary {
+            background: #ff6b35;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                        url('https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-links {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff6b35;
+            transform: translateY(-3px);
+        }
+
+        .search-results {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: none;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .result-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .card-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .local-time {
+            background: #f0f8ff;
+            padding: 0.5rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #2c5aa0;
+            font-weight: 600;
+        }
+
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            padding: 120px 2rem 4rem;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c5aa0;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 60px;
+            height: 4px;
+            background: #ff6b35;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-section {
+            background: #f8f9fa;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-card i {
+            font-size: 3rem;
+            color: #2c5aa0;
+            margin-bottom: 1rem;
+        }
+
+        .team-card h3 {
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card .role {
+            color: #ff6b35;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .team-card .details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .contact-info {
+            background: linear-gradient(135deg, #2c5aa0, #3d6cb9);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            color: #ff6b35;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 10px rgba(44, 90, 160, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .search-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-input {
+                width: 180px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2c5aa0;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showSection('home')">
+                <i class="fas fa-globe-americas"></i>
+                TravelBloom
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('about')">About Us</a></li>
+                <li><a href="#" onclick="showSection('contact')">Contact Us</a></li>
+                
+                <li class="search-container" id="searchContainer">
+                    <input type="text" placeholder="Search destinations, beaches, temples..." class="search-input" id="searchInput">
+                    <button class="btn btn-primary" onclick="searchDestinations()">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearResults()">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-section active" id="home">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="pulse">Discover Your Next Adventure</h1>
+                <p>Explore breathtaking destinations, immerse yourself in diverse cultures, and create unforgettable memories around the world.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" onclick="document.getElementById('searchInput').focus()">
+                        <i class="fas fa-search"></i> Start Exploring
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="showSection('about')">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </a>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        
+        <div class="search-results" id="searchResults">
+            <h2 class="section-title">Search Results</h2>
+            <div class="results-grid" id="resultsGrid">   
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="about">
+        <div class="section-container">
+            <h2 class="section-title">About TravelBloom</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 style="color: #2c5aa0; margin-bottom: 1rem;">Our Mission</h3>
+                    <p>At TravelBloom, we believe that travel is more than just visiting new places – it's about discovering yourself, connecting with different cultures, and creating memories that last a lifetime. Our platform is designed to inspire and guide you toward your perfect adventure, whether you're seeking serene beaches, ancient temples, or vibrant cities.</p>
+                    
+                    <h3 style="color: #2c5aa0; margin-top: 2rem; margin-bottom: 1rem;">Why Choose Us?</h3>
+                    <ul style="padding-left: 1.5rem; color: #555;">
+                        <li>Carefully curated travel recommendations</li>
+                        <li>Real-time local information and insights</li>
+                        <li>Professional travel guidance and support</li>
+                        <li>Personalized destination matching</li>
+                    </ul>
+                </div>
+                
+                <div class="about-image">
+                    <img src="https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Travel Adventure">
+                </div>
+            </div>
+            
+            <div class="team-section">
+                <h3 class="section-title" style="margin-bottom: 2rem;">Meet Our Creator</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <i class="fas fa-user-graduate"></i>
+                        <h3>Ram Sharma</h3>
+                        <div class="role">Full-Stack Developer & Creator</div>
+                        <div class="details">
+                            <p><i class="fas fa-university"></i> <strong>University:</strong> GLA University</p>
+                            <p><i class="fas fa-graduation-cap"></i> <strong>Batch:</strong> 2026-27</p>
+                            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> ram9998sharma@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Vision</h3>
+                        <div class="role">Innovation & Excellence</div>
+                        <div class="details">
+                            <p>Dedicated to creating innovative web solutions that enhance user experiences and make travel planning effortless and enjoyable.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <i class="fas fa-code"></i>
+                        <h3>Technology</h3>
+                        <div class="role">Modern Web Development</div>
+                        <div class="details">
+                            <p>Built with cutting-edge technologies including HTML5, CSS3, JavaScript ES6+, and responsive design principles.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="page-section" id="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get In Touch</h2>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong><br>
+                            ram9998sharma@gmail.com
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-university"></i>
+                        <div>
+                            <strong>University</strong><br>
+                            GLA University
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <strong>Academic Year</strong><br>
+                            2026-27 Batch
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Response Time</strong><br>
+                            Within 24 hours
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" onsubmit="submitContactForm(event)">
+                    <h3 style="margin-bottom: 1.5rem; color: #2c5aa0;">Send us a Message</h3>
+                    
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your travel dreams or any questions you have..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="travel_recommendation.js"></script>
+</body>
+</html>

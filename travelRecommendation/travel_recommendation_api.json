@@ -1,0 +1,80 @@
+{
+  "countries": [
+    {
+      "id": 1,
+      "name": "Australia",
+      "cities": [
+        {
+          "name": "Sydney, Australia",
+          "imageUrl": "https://images.pexels.com/photos/783682/pexels-photo-783682.jpeg?auto=compress&cs=tinysrgb&w=800",
+          "description": "A vibrant city known for its iconic landmarks like the Sydney Opera House and Sydney Harbour Bridge. Experience world-class dining, beautiful beaches, and a thriving cultural scene in this stunning harbor city."
+        },
+        {
+          "name": "Melbourne, Australia", 
+          "imageUrl": "https://images.pexels.com/photos/1146834/pexels-photo-1146834.jpeg?auto=compress&cs=tinysrgb&w=800",
+          "description": "A cultural hub famous for its art, food, and diverse neighborhoods. Known as the cultural capital of Australia, Melbourne offers incredible coffee culture, street art, and Victorian architecture."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Japan",
+      "cities": [
+        {
+          "name": "Tokyo, Japan",
+          "imageUrl": "https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=800",
+          "description": "A bustling metropolis blending tradition and modernity, famous for its cherry blossoms and rich culture. Experience cutting-edge technology alongside ancient temples in this fascinating capital city."
+        },
+        {
+          "name": "Kyoto, Japan",
+          "imageUrl": "https://images.pexels.com/photos/161251/fushimi-inari-taisha-shrine-kyoto-japan-temple-161251.jpeg?auto=compress&cs=tinysrgb&w=800",
+          "description": "Known for its historic temples, gardens, and traditional tea houses. The former imperial capital offers a glimpse into traditional Japanese culture with over 2,000 temples and shrines."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Brazil",
+      "cities": [
+        {
+          "name": "Rio de Janeiro, Brazil",
+          "imageUrl": "https://images.pexels.com/photos/351283/pexels-photo-351283.jpeg?auto=compress&cs=tinysrgb&w=800",
+          "description": "A lively city known for its stunning beaches, vibrant carnival celebrations, and iconic landmarks. From Christ the Redeemer to Copacabana Beach, Rio offers endless excitement and natural beauty."
+        },
+        {
+          "name": "São Paulo, Brazil",
+          "imageUrl": "https://images.pexels.com/photos/3185480/pexels-photo-3185480.jpeg?auto=compress&cs=tinysrgb&w=800",
+          "description": "The financial hub with diverse culture, arts, and a vibrant nightlife. South America's largest city offers world-class museums, incredible restaurants, and a thriving business district."
+        }
+      ]
+    }
+  ],
+  "temples": [
+    {
+      "id": 1,
+      "name": "Angkor Wat, Cambodia",
+      "imageUrl": "https://images.pexels.com/photos/2929906/pexels-photo-2929906.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "description": "A UNESCO World Heritage site and the largest religious monument in the world. This magnificent 12th-century temple complex showcases the pinnacle of Khmer architecture and Hindu-Buddhist art."
+    },
+    {
+      "id": 2,
+      "name": "Taj Mahal, India",
+      "imageUrl": "https://images.pexels.com/photos/1583339/pexels-photo-1583339.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "description": "An iconic symbol of love temple and a masterpiece of Mughal architecture. This white marble mausoleum, built by Emperor Shah Jahan for his wife Mumtaz Mahal, is considered one of the most beautiful buildings in the world."
+    }
+  ],
+  "beaches": [
+    {
+      "id": 1,
+      "name": "Bora Bora Beach, French Polynesia",
+      "imageUrl": "https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "description": "An island known for its stunning turquoise waters and luxurious overwater bungalows. This tropical paradise offers world-class snorkeling, diving, and the ultimate romantic getaway experience."
+    },
+    {
+      "id": 2,
+      "name": "Copacabana Beach, Brazil",
+      "imageUrl": "https://images.pexels.com/photos/2549018/pexels-photo-2549018.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "description": "A famous beach in Rio de Janeiro, Brazil, with a vibrant atmosphere and scenic views. This iconic 4km stretch of golden sand is perfect for beach volleyball, people-watching, and enjoying caipirinhas at sunset."
+    }
+  ]
+}
